@@ -308,7 +308,8 @@ def build_report():
     pdf.bullet(
         "Non-normality: Q-Q plots for all five classes show systematic "
         "right-tail departure from the normal reference line (Figure 5), "
-        "confirmed by Shapiro-Wilk tests (Shapiro & Wilk, 1965; all W < 0.88, p < 0.001). The "
+        "confirmed by Shapiro-Wilk tests (Shapiro & Wilk, 1965; W ranged from "
+        "0.64 for Teleostei to 0.88 for Aves, all p < 0.001). The "
         "raw longevity distribution has a mean of 25.5 years vs. a median "
         "of 15.0 years, indicating severe positive skew."
     )
@@ -368,7 +369,7 @@ def build_report():
         "maximum longevity was 25.5 years with a median of 15.0 years, "
         "confirming severe right-skewness. Among the five vertebrate classes, "
         "Reptilia had the highest median longevity (17.8 years), followed by "
-        "Mammalia (17.0), Aves (14.6), Amphibia (12.0), and Teleostei (10.0). "
+        "Mammalia (17.0), Aves (14.6), Amphibia (11.9), and Teleostei (10.0). "
         "However, Teleostei exhibited the widest variability (SD = 21.6 "
         "years), reflecting diversity from short-lived tropical fish to "
         "sturgeon exceeding 200 years."
@@ -498,8 +499,8 @@ def build_report():
         "plan. The most divergent pair was Reptilia vs. Teleostei (adjusted "
         "p = 1.92 x 10^-30), consistent with the large median gap between "
         "these classes (17.8 vs. 10.0 years). Rank-biserial correlations "
-        "(effect sizes for each pair) ranged from r_rb = 0.05 (Aves vs. "
-        "Mammalia) to r_rb = 0.34 (Amphibia vs. Reptilia), confirming that "
+        "(effect sizes for each pair) ranged from |r_rb| = 0.05 (Aves vs. "
+        "Mammalia) to |r_rb| = 0.38 (Reptilia vs. Teleostei), confirming that "
         "even statistically significant pairs often exhibit modest practical "
         "effect sizes."
     )
@@ -681,9 +682,47 @@ def build_report():
     )
 
     # =======================================================================
-    # 8. REFERENCES
+    # 8. CONCLUSION
     # =======================================================================
-    pdf.section_heading(8, "References")
+    pdf.section_heading(8, "Conclusion")
+    pdf.body_text(
+        "This analysis examined maximum longevity across 3,909 vertebrate "
+        "species from the AnAge database, comparing five major classes. Both "
+        "parametric (ANOVA) and non-parametric (Kruskal-Wallis) approaches "
+        "confirmed statistically significant between-class differences in "
+        "longevity (H(4) = 193.51, p = 9.33 x 10^-41), with 9 of 10 class "
+        "pairs differing significantly after Bonferroni correction. The sole "
+        "exception was Aves vs. Mammalia, which share similar longevity "
+        "distributions."
+    )
+    pdf.body_text(
+        "The small effect size (epsilon-squared = 0.0495) indicates that "
+        "class membership explains approximately 5% of ranked longevity "
+        "variance, with within-class variation dominating. The allometric "
+        "relationship between body size and longevity (r = 0.5678, n = 3,131) "
+        "confirms established scaling theory. Sensitivity analyses across "
+        "four data subsets demonstrated that these findings are robust to "
+        "data quality and specimen origin."
+    )
+    pdf.body_text(
+        "Key limitations include captive-specimen bias, taxonomic "
+        "overrepresentation of mammals and birds, and phylogenetic "
+        "non-independence among related species. Future work should "
+        "incorporate phylogenetic comparative methods to account for shared "
+        "evolutionary history."
+    )
+    pdf.subsection("Software Environment")
+    pdf.body_text(
+        "All analyses were conducted in Python 3.13 using SciPy 1.17.0, "
+        "Pandas 3.0.1, NumPy 2.4.2, Matplotlib 3.10.8, and Seaborn 0.13.2. "
+        "The PDF report was generated with fpdf2 2.8.6. The complete analysis "
+        "notebook and all data files are available in the project repository."
+    )
+
+    # =======================================================================
+    # 9. REFERENCES
+    # =======================================================================
+    pdf.section_heading(9, "References")
     pdf.set_font(*FONT_BODY)
 
     references = [

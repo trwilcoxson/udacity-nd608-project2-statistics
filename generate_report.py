@@ -22,7 +22,7 @@ OUTPUT_COPY = f"{PROJECT_DIR}/Statistical_Analysis_Report.pdf"
 TITLE = "Statistical Analysis of Animal Longevity Across Vertebrate Classes"
 AUTHOR = "Tim Wilcoxson"
 DATE = "February 2026"
-COURSE = "Udacity ND608 -- Data and Statistical Reasoning"
+COURSE = "Project 2 -- Data and Statistical Reasoning"
 DATASET = "AnAge -- The Animal Ageing and Longevity Database"
 SOURCE_URL = "https://genomics.senescence.info/species/"
 

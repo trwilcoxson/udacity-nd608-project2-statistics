@@ -3,7 +3,7 @@
 A comprehensive statistical analysis of the [AnAge database](https://genomics.senescence.info/species/) investigating whether maximum lifespan differs significantly across five major vertebrate classes (Mammalia, Aves, Teleostei, Reptilia, Amphibia), with a secondary analysis quantifying the allometric relationship between body size and longevity.
 
 **Author:** Tim Wilcoxson
-**Course:** Udacity ND608 -- Data and Statistical Reasoning
+**Course:** Project 2 -- Data and Statistical Reasoning
 **Date:** February 2026
 
 ## Key Findings

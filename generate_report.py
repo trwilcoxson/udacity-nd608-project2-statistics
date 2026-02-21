@@ -734,6 +734,11 @@ def build_report():
             "(pp. 278-292). Stanford University Press."
         ),
         (
+            "Mann, H. B., & Whitney, D. R. (1947). On a test of whether "
+            "one of two random variables is stochastically larger than the "
+            "other. Annals of Mathematical Statistics, 18(1), 50-60."
+        ),
+        (
             "Lusa, L., Proust-Lima, C., Schmidt, C. O., Lee, K. J., "
             "le Cessie, S., Baillie, M., Lawrence, F., & Huebner, M. (2024). "
             "Initial data analysis for longitudinal studies to build a solid "

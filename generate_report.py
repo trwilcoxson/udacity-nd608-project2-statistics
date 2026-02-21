@@ -158,7 +158,7 @@ def build_report():
         "This report presents a statistical analysis of the AnAge database "
         "(de Magalhaes & Costa, 2009), a curated collection of longevity and "
         "life-history data for 4,645 species maintained by the Human Ageing "
-        "Genomic Resources (HAGR) project. The primary research question is "
+        "Genomic Resources project (HAGR, 2023). The primary research question is "
         "whether maximum lifespan differs significantly across five major "
         "vertebrate classes: Mammalia, Aves, Teleostei, Reptilia, and Amphibia. "
         "A secondary analysis quantifies the allometric relationship between "
@@ -203,7 +203,7 @@ def build_report():
     )
     pdf.body_text(
         "Data provenance: 85% of records carry an 'acceptable' quality rating "
-        "from the HAGR curation team, 11% are rated 'low,' and 2% "
+        "from the HAGR curation team, 2% are rated 'high,' 11% 'low,' and 2% "
         "'questionable.' Approximately 45% of specimens originate from wild "
         "populations and 41% from captive settings, with 14% of unknown "
         "origin. This mix of captive and wild data is an important caveat "
@@ -248,7 +248,7 @@ def build_report():
         "screening phase revealed three critical assumption violations that "
         "undermine the parametric baseline: (1) severe non-normality "
         "(confirmed by Q-Q plots showing heavy right-tail departure in all "
-        "classes; see Figure 5), (2) unequal variances (Levene's test: "
+        "classes; see Figure 5), (2) unequal variances (Levene's test "
         "W = 12.45, p < 0.001), and (3) highly unbalanced group sizes ranging "
         "from n = 162 (Amphibia) to n = 1,394 (Aves). Second, comparing "
         "both approaches demonstrates how assumption violations affect the "
@@ -308,12 +308,12 @@ def build_report():
     pdf.bullet(
         "Non-normality: Q-Q plots for all five classes show systematic "
         "right-tail departure from the normal reference line (Figure 5), "
-        "confirmed by Shapiro-Wilk tests (all W < 0.88, p < 0.001). The "
+        "confirmed by Shapiro-Wilk tests (Shapiro & Wilk, 1965; all W < 0.88, p < 0.001). The "
         "raw longevity distribution has a mean of 25.5 years vs. a median "
         "of 15.0 years, indicating severe positive skew."
     )
     pdf.bullet(
-        "Unequal variances: Levene's test rejected the null hypothesis of "
+        "Unequal variances: Levene's test (Levene, 1960) rejected the null hypothesis of "
         "equal variances (W = 12.45, p = 4.59 x 10^-10), confirming "
         "heteroscedasticity. Standard deviations range from 10.7 (Amphibia) "
         "to 21.6 (Teleostei)."
@@ -363,7 +363,8 @@ def build_report():
 
     pdf.subsection("Descriptive Findings")
     pdf.body_text(
-        "Across all 4,141 species with longevity data, the overall mean "
+        "Across all 4,141 species with longevity data (3,909 in the five "
+        "target vertebrate classes), the overall mean "
         "maximum longevity was 25.5 years with a median of 15.0 years, "
         "confirming severe right-skewness. Among the five vertebrate classes, "
         "Reptilia had the highest median longevity (17.8 years), followed by "
@@ -392,7 +393,7 @@ def build_report():
     pdf.body_text(
         "The scatter plot of log10(adult weight) vs. log10(maximum longevity) "
         "across 3,131 vertebrate species yielded a Pearson correlation "
-        "coefficient of r = 0.568 (p < 0.001), indicating a moderate positive "
+        "coefficient of r = 0.5678 (p < 0.001), indicating a moderate positive "
         "linear association on the log-log scale (Figure 3). This confirms "
         "the well-established allometric principle (Speakman, 2005) that "
         "larger-bodied species tend to live longer, though the relationship "
@@ -406,7 +407,7 @@ def build_report():
         f"{FIGURES_DIR}/fig3_weight_vs_longevity.png",
         "Figure 3. Allometric scaling of body size and longevity across "
         "vertebrate classes (n = 3,131). Dashed line: OLS regression "
-        "(r = 0.568).",
+        "(r = 0.5678).",
         width=CONTENT_W - 10,
     )
 
@@ -434,10 +435,10 @@ def build_report():
 
     pdf.subsection("Selected Results: Kruskal-Wallis H-Test (Non-Parametric)")
     pdf.body_text(
-        "The Kruskal-Wallis H-test yielded H(4) = 193.5 with p = 9.33 x "
+        "The Kruskal-Wallis H-test yielded H(4) = 193.51 with p = 9.33 x "
         "10^-41 (n = 3,909 species across 5 classes), decisively rejecting "
-        "H0. The effect size was epsilon-squared = 0.050 (small), indicating "
-        "that class membership explains approximately 5.0% of the variance "
+        "H0. The effect size was epsilon-squared = 0.0495 (small), indicating "
+        "that class membership explains approximately 5% of the variance "
         "in ranked longevity. This is the primary and most reliable result "
         "of the hypothesis test, as the Kruskal-Wallis test does not depend "
         "on the violated assumptions."
@@ -461,12 +462,13 @@ def build_report():
     )
     pdf.bullet(
         "ANOVA eta-squared = 0.013 vs. Kruskal-Wallis epsilon-squared = "
-        "0.050. The non-parametric approach detects approximately 4 times "
+        "0.0495. The non-parametric approach detects approximately 4 times "
         "more between-class signal."
     )
     pdf.bullet(
         "The discrepancy arises because ANOVA operates on raw values, where "
-        "extreme outliers (species living hundreds to thousands of years) "
+        "extreme outliers (species with recorded maximum longevities "
+        "exceeding 200 years) "
         "inflate within-group variance and suppress the F-ratio. The "
         "Kruskal-Wallis test operates on ranks, neutralizing outlier "
         "influence and revealing the between-class pattern more clearly."
@@ -523,11 +525,11 @@ def build_report():
         "findings."
     )
     pdf.body_text(
-        "For the allometric correlation: Pearson r = 0.568, 95% CI "
+        "For the allometric correlation: Pearson r = 0.5678, 95% CI "
         "[0.544, 0.591] (Fisher z-transformation, n = 3,131). The narrow "
         "interval confirms this is a precisely estimated, moderate positive "
         "association. For the Kruskal-Wallis effect size: epsilon-squared = "
-        "0.050, 95% CI [0.037, 0.066] (bootstrap, 5,000 resamples), "
+        "0.0495, 95% CI [0.037, 0.066] (bootstrap, 5,000 resamples), "
         "confirming the small-effect classification (Cohen, 1988)."
     )
 
@@ -535,7 +537,7 @@ def build_report():
     pdf.body_text(
         "To assess robustness, the Kruskal-Wallis test was re-run on four "
         "data subsets: (1) the full dataset (H = 193.5, p = 9.33e-41, "
-        "epsilon-sq = 0.050); (2) excluding low-quality records (H = 194.1, "
+        "epsilon-sq = 0.0495); (2) excluding low-quality records (H = 194.1, "
         "p = 6.97e-41, epsilon-sq = 0.051); (3) wild specimens only "
         "(H = 97.1, p = 4.15e-20, epsilon-sq = 0.051); and (4) captive "
         "specimens only (H = 132.5, p = 1.13e-27, epsilon-sq = 0.070). "
@@ -568,13 +570,17 @@ def build_report():
     pdf.body_text(
         "We also confirmed that bigger animals generally live longer. Body "
         "size explains roughly a third of the variation in how long species "
-        "live (r = 0.57). The remaining two-thirds depends on other factors "
-        "like diet, habitat, predation risk, and reproductive strategy."
+        "live -- on a scale from 0 (no relationship) to 1 (perfect "
+        "relationship), the correlation scored 0.57, indicating a moderately "
+        "strong connection. The remaining two-thirds of the variation depends "
+        "on other factors like diet, habitat, predation risk, and "
+        "reproductive strategy."
     )
     pdf.body_text(
         "We tested this question using two different statistical methods -- "
         "a standard approach and a more robust alternative -- and both gave "
-        "the same answer: the differences are real (p < 0.001). The robust "
+        "the same answer: the differences are real (the probability of seeing "
+        "these results by chance alone is less than 1 in 1,000). The robust "
         "method was actually better at detecting the differences because it "
         "handles unusual data more effectively. However, while the differences "
         "between groups are statistically real, the group label alone "
@@ -723,6 +729,11 @@ def build_report():
             "https://doi.org/10.2307/2280779"
         ),
         (
+            "Levene, H. (1960). Robust tests for equality of variances. "
+            "In I. Olkin (Ed.), Contributions to Probability and Statistics "
+            "(pp. 278-292). Stanford University Press."
+        ),
+        (
             "Lusa, L., Proust-Lima, C., Schmidt, C. O., Lee, K. J., "
             "le Cessie, S., Baillie, M., Lawrence, F., & Huebner, M. (2024). "
             "Initial data analysis for longitudinal studies to build a solid "
@@ -737,6 +748,11 @@ def build_report():
             "Midway, S. R. (2020). Principles of effective data visualization. "
             "Patterns, 1(9), 100141. "
             "https://doi.org/10.1016/j.patter.2020.100141"
+        ),
+        (
+            "Shapiro, S. S., & Wilk, M. B. (1965). An analysis of variance "
+            "test for normality (complete samples). Biometrika, 52(3-4), "
+            "591-611. https://doi.org/10.1093/biomet/52.3-4.591"
         ),
         (
             "Speakman, J. R. (2005). Body size, energy metabolism and lifespan. "

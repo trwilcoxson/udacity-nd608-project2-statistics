@@ -335,10 +335,10 @@ def build_report():
     pdf.body_text(
         "When the omnibus test rejects H0, pairwise Mann-Whitney U tests "
         "identify which specific class pairs differ. With k = 5 groups there "
-        "are C(5,2) = 10 comparisons. The Bonferroni correction adjusts the "
-        "significance threshold to alpha/10 = 0.005, controlling the "
-        "family-wise Type I error rate. This correction is conservative: it "
-        "minimizes false positives at the cost of increased Type II error "
+        "are C(5,2) = 10 comparisons. The Bonferroni correction (Dunn, 1961) "
+        "adjusts the significance threshold to alpha/10 = 0.005, controlling "
+        "the family-wise Type I error rate. This correction is conservative: "
+        "it minimizes false positives at the cost of increased Type II error "
         "(missed true differences)."
     )
 
@@ -350,7 +350,8 @@ def build_report():
         "membership. For Kruskal-Wallis: epsilon-squared (epsilon-sq = "
         "H / (n - 1)), the non-parametric analogue estimating the proportion "
         "of variance in ranks explained by group membership. Conventional "
-        "benchmarks: ~0.01 = small, ~0.06 = medium, ~0.14 = large."
+        "benchmarks (Cohen, 1988): ~0.01 = small, ~0.06 = medium, "
+        "~0.14 = large."
     )
 
     # =======================================================================
@@ -391,8 +392,9 @@ def build_report():
         "across 3,131 vertebrate species yielded a Pearson correlation "
         "coefficient of r = 0.568 (p < 0.001), indicating a moderate positive "
         "linear association on the log-log scale (Figure 3). This confirms "
-        "the well-established allometric principle that larger-bodied species "
-        "tend to live longer, though the relationship explains approximately "
+        "the well-established allometric principle (Speakman, 2005) that "
+        "larger-bodied species tend to live longer, though the relationship "
+        "explains approximately "
         "32% of the variance (r-squared = 0.32), leaving substantial residual "
         "variation attributable to factors such as metabolic rate, predation "
         "pressure, and reproductive strategy."
@@ -499,8 +501,9 @@ def build_report():
         "family-wise Type I error rate. It is possible that the one "
         "non-significant result (Aves vs. Mammalia) represents a genuine "
         "small difference masked by overcorrection. Less conservative "
-        "alternatives such as the Holm or Benjamini-Hochberg procedures could "
-        "be explored in future work."
+        "alternatives such as the Holm step-down procedure (Holm, 1979) or "
+        "the Benjamini-Hochberg false discovery rate control "
+        "(Benjamini & Hochberg, 1995) could be explored in future work."
     )
 
     # =======================================================================
@@ -566,6 +569,29 @@ def build_report():
         "systematically understudied (Lusa et al., 2024)."
     )
 
+    pdf.subsection("Measurement Bias")
+    pdf.bullet(
+        "Maximum longevity is an extreme-value statistic that is "
+        "systematically harder to capture for species with small populations, "
+        "short generation times, or elusive behavior. Teleostei and Amphibia "
+        "are particularly affected: many fish species are monitored only "
+        "through catch records, and amphibians in tropical regions may never "
+        "be recaptured after initial marking. As a result, the recorded "
+        "maximum longevity for these taxa likely underestimates their true "
+        "biological potential, compressing between-class differences."
+    )
+    pdf.bullet(
+        "Phylogenetic non-independence: Species sharing recent common "
+        "ancestry are not statistically independent observations "
+        "(Felsenstein, 1985). The Kruskal-Wallis test assumes independent "
+        "samples, but closely related species within each class will have "
+        "correlated longevity values. This inflates the effective sample "
+        "size and may produce artificially narrow confidence intervals. "
+        "Phylogenetic comparative methods (e.g., phylogenetic generalized "
+        "least squares) would address this limitation but require a resolved "
+        "phylogeny for all 3,909 species."
+    )
+
     pdf.subsection("Sampling and Representation Bias")
     pdf.bullet(
         "Taxonomic overrepresentation: The database heavily favors "
@@ -618,10 +644,34 @@ def build_report():
 
     references = [
         (
+            "Benjamini, Y., & Hochberg, Y. (1995). Controlling the false "
+            "discovery rate: A practical and powerful approach to multiple "
+            "testing. Journal of the Royal Statistical Society: Series B, "
+            "57(1), 289-300. https://doi.org/10.1111/j.2517-6161.1995.tb02031.x"
+        ),
+        (
+            "Cohen, J. (1988). Statistical Power Analysis for the Behavioral "
+            "Sciences (2nd ed.). Lawrence Erlbaum Associates."
+        ),
+        (
             "de Magalhaes, J. P., & Costa, J. (2009). A database of vertebrate "
             "longevity records and their relation to other life-history traits. "
             "Journal of Evolutionary Biology, 22(8), 1770-1774. "
             "https://doi.org/10.1111/j.1420-9101.2009.01783.x"
+        ),
+        (
+            "Dunn, O. J. (1961). Multiple comparisons among means. Journal of "
+            "the American Statistical Association, 56(293), 52-64. "
+            "https://doi.org/10.1080/01621459.1961.10482090"
+        ),
+        (
+            "Felsenstein, J. (1985). Phylogenies and the comparative method. "
+            "The American Naturalist, 125(1), 1-15. "
+            "https://doi.org/10.1086/284325"
+        ),
+        (
+            "Holm, S. (1979). A simple sequentially rejective multiple test "
+            "procedure. Scandinavian Journal of Statistics, 6(2), 65-70."
         ),
         (
             "Human Ageing Genomic Resources [HAGR]. (2023). AnAge: The Animal "
@@ -649,6 +699,11 @@ def build_report():
             "Midway, S. R. (2020). Principles of effective data visualization. "
             "Patterns, 1(9), 100141. "
             "https://doi.org/10.1016/j.patter.2020.100141"
+        ),
+        (
+            "Speakman, J. R. (2005). Body size, energy metabolism and lifespan. "
+            "Journal of Experimental Biology, 208(9), 1717-1730. "
+            "https://doi.org/10.1242/jeb.01556"
         ),
     ]
 

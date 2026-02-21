@@ -285,8 +285,9 @@ def build_report():
         "classes, revealing medians, spreads, and outliers; (3) a scatter plot "
         "with OLS regression line quantifies the allometric weight-longevity "
         "relationship; (4) a horizontal bar chart of the top 10 taxonomic "
-        "orders reveals sampling bias; and (5) Q-Q plots for the three largest "
-        "classes assess normality, a prerequisite for ANOVA."
+        "orders reveals sampling bias; and (5) Q-Q plots for all five classes "
+        "assess normality, with Shapiro-Wilk test annotations quantifying "
+        "the departure."
     )
 
     pdf.subsection("Hypothesis Test Selection and Justification")
@@ -305,10 +306,11 @@ def build_report():
         "were tested and found to be violated:"
     )
     pdf.bullet(
-        "Non-normality: Q-Q plots for all classes show systematic right-tail "
-        "departure from the normal reference line (Figure 5). The raw "
-        "longevity distribution has a mean of 25.5 years vs. a median of "
-        "15.0 years, indicating severe positive skew."
+        "Non-normality: Q-Q plots for all five classes show systematic "
+        "right-tail departure from the normal reference line (Figure 5), "
+        "confirmed by Shapiro-Wilk tests (all W < 0.88, p < 0.001). The "
+        "raw longevity distribution has a mean of 25.5 years vs. a median "
+        "of 15.0 years, indicating severe positive skew."
     )
     pdf.bullet(
         "Unequal variances: Levene's test rejected the null hypothesis of "
@@ -443,9 +445,9 @@ def build_report():
 
     pdf.add_figure(
         f"{FIGURES_DIR}/fig5_qq_plots.png",
-        "Figure 5. Q-Q plots for the three largest classes. Systematic "
-        "right-tail departure from the normal reference line confirms "
-        "non-normality, justifying the non-parametric test selection.",
+        "Figure 5. Q-Q plots for all five vertebrate classes with Shapiro-Wilk "
+        "test statistics (all W < 0.88, p < 0.001). Systematic right-tail "
+        "departure from the normal line confirms non-normality.",
         width=CONTENT_W - 10,
     )
 
@@ -493,7 +495,11 @@ def build_report():
         "distributions despite fundamental differences in physiology and body "
         "plan. The most divergent pair was Reptilia vs. Teleostei (adjusted "
         "p = 1.92 x 10^-30), consistent with the large median gap between "
-        "these classes (17.8 vs. 10.0 years)."
+        "these classes (17.8 vs. 10.0 years). Rank-biserial correlations "
+        "(effect sizes for each pair) ranged from r_rb = 0.05 (Aves vs. "
+        "Mammalia) to r_rb = 0.34 (Amphibia vs. Reptilia), confirming that "
+        "even statistically significant pairs often exhibit modest practical "
+        "effect sizes."
     )
     pdf.body_text(
         "A methodological trade-off: the Bonferroni correction is the most "
@@ -504,6 +510,38 @@ def build_report():
         "alternatives such as the Holm step-down procedure (Holm, 1979) or "
         "the Benjamini-Hochberg false discovery rate control "
         "(Benjamini & Hochberg, 1995) could be explored in future work."
+    )
+
+    pdf.subsection("Confidence Intervals")
+    pdf.body_text(
+        "Bootstrap 95% confidence intervals (percentile method, 9,999 "
+        "resamples) quantify uncertainty in the median longevity estimates. "
+        "Reptilia: 17.8 years [17.0, 19.0]; Mammalia: 17.0 [16.2, 17.9]; "
+        "Aves: 14.6 [13.8, 15.0]; Amphibia: 11.9 [11.0, 13.6]; "
+        "Teleostei: 10.0 [9.0, 11.0]. The non-overlapping CIs for "
+        "Reptilia/Mammalia vs. Teleostei corroborate the hypothesis test "
+        "findings."
+    )
+    pdf.body_text(
+        "For the allometric correlation: Pearson r = 0.568, 95% CI "
+        "[0.544, 0.591] (Fisher z-transformation, n = 3,131). The narrow "
+        "interval confirms this is a precisely estimated, moderate positive "
+        "association. For the Kruskal-Wallis effect size: epsilon-squared = "
+        "0.050, 95% CI [0.037, 0.066] (bootstrap, 5,000 resamples), "
+        "confirming the small-effect classification (Cohen, 1988)."
+    )
+
+    pdf.subsection("Sensitivity Analysis")
+    pdf.body_text(
+        "To assess robustness, the Kruskal-Wallis test was re-run on four "
+        "data subsets: (1) the full dataset (H = 193.5, p = 9.33e-41, "
+        "epsilon-sq = 0.050); (2) excluding low-quality records (H = 194.1, "
+        "p = 6.97e-41, epsilon-sq = 0.051); (3) wild specimens only "
+        "(H = 97.1, p = 4.15e-20, epsilon-sq = 0.051); and (4) captive "
+        "specimens only (H = 132.5, p = 1.13e-27, epsilon-sq = 0.070). "
+        "All four subsets reject H0 with similar effect sizes, confirming "
+        "that the between-class longevity difference is not an artifact of "
+        "data quality ratings or specimen origin."
     )
 
     # =======================================================================

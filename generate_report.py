@@ -50,7 +50,7 @@ class ReportPDF(FPDF):
         self.set_font(*FONT_SMALL)
         self.set_text_color(100, 100, 100)
         self.cell(0, 8, TITLE, align="L")
-        self.ln(4)
+        self.ln(6)
         self.set_draw_color(180, 180, 180)
         self.line(MARGIN, self.get_y(), PAGE_W - MARGIN, self.get_y())
         self.ln(6)
@@ -320,7 +320,7 @@ def build_report():
         "to 21.6 (Teleostei)."
     )
     pdf.bullet(
-        "Unbalanced groups: Sample sizes span a 9:1 ratio (162 to 1,394). "
+        "Unbalanced groups: Sample sizes span a nearly 9:1 ratio (162 to 1,394). "
         "Combined with heteroscedasticity, this imbalance makes the ANOVA "
         "F-test unreliable."
     )
@@ -337,7 +337,8 @@ def build_report():
     pdf.subsection("Post-hoc Comparisons")
     pdf.body_text(
         "When the omnibus test rejects H0, pairwise Mann-Whitney U tests "
-        "identify which specific class pairs differ. With k = 5 groups there "
+        "(Mann & Whitney, 1947) identify which specific class pairs differ. "
+        "With k = 5 groups there "
         "are C(5,2) = 10 comparisons. The Bonferroni correction (Dunn, 1961) "
         "adjusts the significance threshold to alpha/10 = 0.005, controlling "
         "the family-wise Type I error rate. This correction is conservative: "
@@ -353,7 +354,7 @@ def build_report():
         "membership. For Kruskal-Wallis: epsilon-squared (epsilon-sq = "
         "H / (n - 1)), the non-parametric analogue estimating the proportion "
         "of variance in ranks explained by group membership. Conventional "
-        "benchmarks (Cohen, 1988): ~0.01 = small, ~0.06 = medium, "
+        "benchmarks (Cohen, 1988; Tomczak & Tomczak, 2014): ~0.01 = small, ~0.06 = medium, "
         "~0.14 = large."
     )
 
@@ -399,7 +400,7 @@ def build_report():
         "the well-established allometric principle (Speakman, 2005) that "
         "larger-bodied species tend to live longer, though the relationship "
         "explains approximately "
-        "32% of the variance (r-squared = 0.32), leaving substantial residual "
+        "32% of the variance (r-squared = 0.3224), leaving substantial residual "
         "variation attributable to factors such as metabolic rate, predation "
         "pressure, and reproductive strategy."
     )
@@ -424,7 +425,7 @@ def build_report():
     pdf.body_text(
         "The one-way ANOVA yielded F(4, 3904) = 12.67 with p = 3.03 x 10^-10, "
         "rejecting H0 at alpha = 0.05. The effect size was eta-squared = "
-        "0.013 (small), indicating that class membership explains "
+        "0.0128 (small), indicating that class membership explains "
         "approximately 1.3% of the total variance in raw longevity values. "
         "However, this result must be interpreted with caution because both "
         "the normality and equal-variance assumptions are violated (see "
@@ -462,9 +463,13 @@ def build_report():
         "of the detected effect:"
     )
     pdf.bullet(
-        "ANOVA eta-squared = 0.013 vs. Kruskal-Wallis epsilon-squared = "
-        "0.0495. The non-parametric approach detects approximately 4 times "
-        "more between-class signal."
+        "ANOVA eta-squared = 0.0128 vs. Kruskal-Wallis epsilon-squared = "
+        "0.0495. Although these measures are not directly comparable "
+        "(eta-squared uses raw values; epsilon-squared uses ranks), "
+        "the non-parametric approach captures approximately 4 times more "
+        "between-class signal because rank-based analysis neutralizes the "
+        "outlier-driven variance inflation that suppresses the ANOVA "
+        "effect size."
     )
     pdf.bullet(
         "The discrepancy arises because ANOVA operates on raw values, where "
@@ -517,7 +522,7 @@ def build_report():
 
     pdf.subsection("Confidence Intervals")
     pdf.body_text(
-        "Bootstrap 95% confidence intervals (percentile method, 9,999 "
+        "Bootstrap 95% confidence intervals (Efron, 1979; percentile method, 9,999 "
         "resamples) quantify uncertainty in the median longevity estimates. "
         "Reptilia: 17.8 years [17.0, 19.0]; Mammalia: 17.0 [16.2, 17.9]; "
         "Aves: 14.6 [13.8, 15.0]; Amphibia: 11.9 [11.0, 13.6]; "
@@ -527,21 +532,21 @@ def build_report():
     )
     pdf.body_text(
         "For the allometric correlation: Pearson r = 0.5678, 95% CI "
-        "[0.544, 0.591] (Fisher z-transformation, n = 3,131). The narrow "
+        "[0.5436, 0.5911] (Fisher z-transformation, n = 3,131). The narrow "
         "interval confirms this is a precisely estimated, moderate positive "
         "association. For the Kruskal-Wallis effect size: epsilon-squared = "
-        "0.0495, 95% CI [0.037, 0.066] (bootstrap, 5,000 resamples), "
+        "0.0495, 95% CI [0.0366, 0.0662] (bootstrap, 5,000 resamples), "
         "confirming the small-effect classification (Cohen, 1988)."
     )
 
     pdf.subsection("Sensitivity Analysis")
     pdf.body_text(
         "To assess robustness, the Kruskal-Wallis test was re-run on four "
-        "data subsets: (1) the full dataset (H = 193.5, p = 9.33e-41, "
-        "epsilon-sq = 0.0495); (2) excluding low-quality records (H = 194.1, "
-        "p = 6.97e-41, epsilon-sq = 0.051); (3) wild specimens only "
-        "(H = 97.1, p = 4.15e-20, epsilon-sq = 0.051); and (4) captive "
-        "specimens only (H = 132.5, p = 1.13e-27, epsilon-sq = 0.070). "
+        "data subsets: (1) the full dataset (H = 193.51, p = 9.33e-41, "
+        "epsilon-sq = 0.0495); (2) excluding low-quality records (H = 194.10, "
+        "p = 6.97e-41, epsilon-sq = 0.0510); (3) wild specimens only "
+        "(H = 97.06, p = 4.15e-20, epsilon-sq = 0.0512); and (4) captive "
+        "specimens only (H = 132.51, p = 1.13e-27, epsilon-sq = 0.0697). "
         "All four subsets reject H0 with similar effect sizes, confirming "
         "that the between-class longevity difference is not an artifact of "
         "data quality ratings or specimen origin."
@@ -555,8 +560,8 @@ def build_report():
         "Different types of animals really do live different lengths of time, "
         "and this is not just coincidence -- it is a real biological pattern. "
         "We compared the maximum lifespans of nearly 4,000 species across "
-        "five major groups of vertebrates (mammals, birds, bony fish, "
-        "reptiles, and amphibians) and found strong evidence that the group "
+        "five major groups of vertebrates (mammals, birds, bony fish such as "
+        "salmon and goldfish, reptiles, and amphibians) and found strong evidence that the group "
         "an animal belongs to is meaningfully connected to how long it can "
         "live."
     )
@@ -581,7 +586,7 @@ def build_report():
         "We tested this question using two different statistical methods -- "
         "a standard approach and a more robust alternative -- and both gave "
         "the same answer: the differences are real (the probability of seeing "
-        "these results by chance alone is less than 1 in 1,000). The robust "
+        "these results by chance alone is far less than 1 in a million). The robust "
         "method was actually better at detecting the differences because it "
         "handles unusual data more effectively. However, while the differences "
         "between groups are statistically real, the group label alone "
@@ -748,6 +753,11 @@ def build_report():
             "https://doi.org/10.1080/01621459.1961.10482090"
         ),
         (
+            "Efron, B. (1979). Bootstrap methods: Another look at the jackknife. "
+            "The Annals of Statistics, 7(1), 1-26. "
+            "https://doi.org/10.1214/aos/1176344552"
+        ),
+        (
             "Felsenstein, J. (1985). Phylogenies and the comparative method. "
             "The American Naturalist, 125(1), 1-15. "
             "https://doi.org/10.1086/284325"
@@ -773,16 +783,17 @@ def build_report():
             "(pp. 278-292). Stanford University Press."
         ),
         (
-            "Mann, H. B., & Whitney, D. R. (1947). On a test of whether "
-            "one of two random variables is stochastically larger than the "
-            "other. Annals of Mathematical Statistics, 18(1), 50-60."
-        ),
-        (
             "Lusa, L., Proust-Lima, C., Schmidt, C. O., Lee, K. J., "
             "le Cessie, S., Baillie, M., Lawrence, F., & Huebner, M. (2024). "
             "Initial data analysis for longitudinal studies to build a solid "
             "foundation for reproducible analysis. PLoS ONE, 19(5), e0295726. "
             "https://doi.org/10.1371/journal.pone.0295726"
+        ),
+        (
+            "Mann, H. B., & Whitney, D. R. (1947). On a test of whether "
+            "one of two random variables is stochastically larger than the "
+            "other. The Annals of Mathematical Statistics, 18(1), 50-60. "
+            "https://doi.org/10.1214/aoms/1177730491"
         ),
         (
             "McDonald, J. H. (2014). Handbook of Biological Statistics "
@@ -802,6 +813,11 @@ def build_report():
             "Speakman, J. R. (2005). Body size, energy metabolism and lifespan. "
             "Journal of Experimental Biology, 208(9), 1717-1730. "
             "https://doi.org/10.1242/jeb.01556"
+        ),
+        (
+            "Tomczak, M., & Tomczak, E. (2014). The need to report effect "
+            "size estimates revisited. An overview of some recommended "
+            "measures of effect size. Trends in Sport Sciences, 1(21), 19-25."
         ),
     ]
 

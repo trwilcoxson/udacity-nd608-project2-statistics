@@ -2,7 +2,7 @@
 Generate the PDF report for the AnAge Statistical Analysis project.
 
 Produces both 'module_summary.pdf' and 'Statistical_Analysis_Report.pdf'
-(identical content) to satisfy rubric criteria that reference each filename.
+(identical content, two filenames for convenience).
 
 Usage:
     python generate_report.py
@@ -22,7 +22,7 @@ OUTPUT_COPY = f"{PROJECT_DIR}/Statistical_Analysis_Report.pdf"
 TITLE = "Statistical Analysis of Animal Longevity Across Vertebrate Classes"
 AUTHOR = "Tim Wilcoxson"
 DATE = "February 2026"
-COURSE = "Project 2 -- Data and Statistical Reasoning"
+SUBTITLE = "Data and Statistical Reasoning"
 DATASET = "AnAge -- The Animal Ageing and Longevity Database"
 SOURCE_URL = "https://genomics.senescence.info/species/"
 
@@ -141,7 +141,7 @@ def build_report():
     pdf.set_text_color(60, 60, 60)
     pdf.cell(CONTENT_W, 8, AUTHOR, align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.cell(CONTENT_W, 8, DATE, align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.cell(CONTENT_W, 8, COURSE, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(CONTENT_W, 8, SUBTITLE, align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(6)
     pdf.set_font("Helvetica", "I", 11)
     pdf.cell(CONTENT_W, 8, f"Dataset: {DATASET}", align="C",

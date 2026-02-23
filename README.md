@@ -5,7 +5,7 @@ A comprehensive statistical analysis of the [AnAge database](https://genomics.se
 | | |
 |---|---|
 | **Author** | Tim Wilcoxson |
-| **Course** | Project 2 — Data and Statistical Reasoning |
+| **Focus** | Data and Statistical Reasoning |
 | **Date** | February 2026 |
 
 ## Key Findings
@@ -42,7 +42,7 @@ project2_statistics/
 ## Setup and Reproduction
 
 ```bash
-git clone https://github.com/trwilcoxson/udacity-nd608-project2-statistics.git
+git clone https://github.com/trwilcoxson/animal-longevity-analysis.git
 cd project2_statistics
 python -m venv venv
 source venv/bin/activate
